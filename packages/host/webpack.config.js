@@ -1,7 +1,10 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
-
+const dotenv = require("dotenv").config({
+  path: path.join(__dirname, ".env"),
+});
 const { dependencies } = require("./package.json");
 
 module.exports = {
@@ -29,24 +32,46 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)?$/,
+        test: /\.m?js/,
+        type: "javascript/auto",
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
+        test: /\.(css|s[ac]ss)$/i,
+        use: ["style-loader", "css-loader", "postcss-loader"],
+      },
+      {
+        test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env", "@babel/preset-react"],
-            },
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: [
+              "@babel/preset-typescript",
+              [
+                "@babel/preset-react",
+                {
+                  runtime: "automatic",
+                },
+              ],
+              "@babel/preset-env",
+            ],
+            plugins: [["@babel/transform-runtime"]],
           },
-        ],
+        },
       },
     ],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env": dotenv.parsed,
+    }),
     new ModuleFederationPlugin({
       name: "Host",
       remotes: {
-        Remote: `Remote@http://localhost:4000/remoteEntry.js`,
+        Remote: `Remote@${process.env.REMOTE_URL}/remoteEntry.js`,
       },
     }),
     new HtmlWebpackPlugin({
@@ -57,7 +82,7 @@ module.exports = {
     }),
   ],
   resolve: {
-    extensions: [".jsx", ".js", ".json"],
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
   target: "web",
 };

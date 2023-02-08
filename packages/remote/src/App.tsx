@@ -5,7 +5,7 @@ const App = () => {
     <div>
       <h1>Host Website2</h1>
       <h2>this button import from remote:</h2>
-      <Button>Remote button</Button>
+      <Button id="ff">Remote button</Button>
     </div>
   );
 };
