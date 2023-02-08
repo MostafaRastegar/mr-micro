@@ -1,5 +1,5 @@
 import React from "react";
-const Button = React.lazy(() => import("remote/components/Button"));
+const Button = React.lazy(() => import("Remote/Button"));
 import ErrorBoundary from "./ErrorBoundary";
 
 const App = () => {

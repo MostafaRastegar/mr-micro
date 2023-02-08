@@ -1,78 +1,45 @@
+var Remote;
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/App.jsx":
-/*!*********************!*\
-  !*** ./src/App.jsx ***!
-  \*********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react/react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-
-var Button = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().lazy(function () {
-  return __webpack_require__.e(/*! import() */ "src_components_Button_jsx-_2fef1").then(__webpack_require__.bind(__webpack_require__, /*! ./components/Button */ "./src/components/Button.jsx"));
-});
-var App = function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h1", null, "Host Website2"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", null, "this button import from remote:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Button, null, "Remote button"));
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
-
-/***/ }),
-
-/***/ "./src/index.jsx":
+/***/ "webpack/container/entry/Remote":
 /*!***********************!*\
-  !*** ./src/index.jsx ***!
+  !*** container entry ***!
   \***********************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "webpack/sharing/consume/default/react/react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "../../node_modules/react-dom/client.js");
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App */ "./src/App.jsx");
-
-
-
-var root = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById("remote"));
-root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_App__WEBPACK_IMPORTED_MODULE_2__["default"], null)));
-
-/***/ }),
-
-/***/ "../../node_modules/react-dom/client.js":
-/*!**********************************************!*\
-  !*** ../../node_modules/react-dom/client.js ***!
-  \**********************************************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
+var moduleMap = {
+	"./Button": () => {
+		return Promise.all([__webpack_require__.e("webpack_sharing_consume_default_react_react"), __webpack_require__.e("src_components_Button_jsx")]).then(() => (() => ((__webpack_require__(/*! ./src/components/Button */ "./src/components/Button.jsx")))));
+	}
+};
+var get = (module, getScope) => {
+	__webpack_require__.R = getScope;
+	getScope = (
+		__webpack_require__.o(moduleMap, module)
+			? moduleMap[module]()
+			: Promise.resolve().then(() => {
+				throw new Error('Module "' + module + '" does not exist in container.');
+			})
+	);
+	__webpack_require__.R = undefined;
+	return getScope;
+};
+var init = (shareScope, initScope) => {
+	if (!__webpack_require__.S) return;
+	var name = "default"
+	var oldScope = __webpack_require__.S[name];
+	if(oldScope && oldScope !== shareScope) throw new Error("Container initialization failed as it has already been initialized with a different share scope");
+	__webpack_require__.S[name] = shareScope;
+	return __webpack_require__.I(name, initScope);
+};
 
-
-var m = __webpack_require__(/*! react-dom */ "webpack/sharing/consume/default/react-dom/react-dom");
-if (false) {} else {
-  var i = m.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-  exports.createRoot = function(c, o) {
-    i.usingClientEntryPoint = true;
-    try {
-      return m.createRoot(c, o);
-    } finally {
-      i.usingClientEntryPoint = false;
-    }
-  };
-  exports.hydrateRoot = function(c, h, o) {
-    i.usingClientEntryPoint = true;
-    try {
-      return m.hydrateRoot(c, h, o);
-    } finally {
-      i.usingClientEntryPoint = false;
-    }
-  };
-}
-
+// This exports getters to disallow modifications
+__webpack_require__.d(exports, {
+	get: () => (get),
+	init: () => (init)
+});
 
 /***/ })
 
@@ -417,20 +384,9 @@ if (false) {} else {
 /******/ 		});
 /******/ 		var installedModules = {};
 /******/ 		var moduleToHandlerMapping = {
-/******/ 			"webpack/sharing/consume/default/react/react": () => (loadSingletonVersionCheckFallback("default", "react", [1,18,2,0], () => (__webpack_require__.e("vendors-node_modules_react_index_js").then(() => (() => (__webpack_require__(/*! react */ "../../node_modules/react/index.js"))))))),
-/******/ 			"webpack/sharing/consume/default/react-dom/react-dom": () => (loadSingletonVersionCheckFallback("default", "react-dom", [1,18,2,0], () => (__webpack_require__.e("vendors-node_modules_react-dom_index_js").then(() => (() => (__webpack_require__(/*! react-dom */ "../../node_modules/react-dom/index.js")))))))
+/******/ 			"webpack/sharing/consume/default/react/react": () => (loadSingletonVersionCheckFallback("default", "react", [1,18,2,0], () => (__webpack_require__.e("vendors-node_modules_react_index_js").then(() => (() => (__webpack_require__(/*! react */ "../../node_modules/react/index.js")))))))
 /******/ 		};
-/******/ 		var initialConsumes = ["webpack/sharing/consume/default/react/react","webpack/sharing/consume/default/react-dom/react-dom"];
-/******/ 		initialConsumes.forEach((id) => {
-/******/ 			__webpack_require__.m[id] = (module) => {
-/******/ 				// Handle case when module is used sync
-/******/ 				installedModules[id] = 0;
-/******/ 				delete __webpack_require__.c[id];
-/******/ 				var factory = moduleToHandlerMapping[id]();
-/******/ 				if(typeof factory !== "function") throw new Error("Shared module is not available for eager consumption: " + id);
-/******/ 				module.exports = factory();
-/******/ 			}
-/******/ 		});
+/******/ 		// no consumes in initial chunks
 /******/ 		var chunkMapping = {
 /******/ 			"webpack_sharing_consume_default_react_react": [
 /******/ 				"webpack/sharing/consume/default/react/react"
@@ -473,7 +429,7 @@ if (false) {} else {
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"remoteEntry": 0
+/******/ 			"Remote": 0
 /******/ 		};
 /******/ 		
 /******/ 		__webpack_require__.f.j = (chunkId, promises) => {
@@ -560,7 +516,8 @@ if (false) {} else {
 /******/ 	// module cache are used so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/index.jsx");
+/******/ 	var __webpack_exports__ = __webpack_require__("webpack/container/entry/Remote");
+/******/ 	Remote = __webpack_exports__;
 /******/ 	
 /******/ })()
 ;

@@ -11,9 +11,9 @@
     "web-vitals": "^3.1.1"
   },
   "scripts": {
-    "dev": "webpack serve",
-    "build": "webpack",
-    "start": "serve -l 3000 -s dist"
+    "start": "webpack --watch",
+    "build": "webpack --mode production",
+    "serve": "serve -l 3000 -s dist"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

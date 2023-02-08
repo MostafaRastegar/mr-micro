@@ -1,5 +1,5 @@
 import React from "react";
-const Button = React.lazy(() => import("./components/Button"));
+import Button from "./components/Button";
 const App = () => {
   return (
     <div>

@@ -6,7 +6,7 @@ const { dependencies } = require("./package.json");
 
 module.exports = {
   entry: {
-    hostEntry: path.join(__dirname, "src/index"),
+    main: path.join(__dirname, "src/index"),
   },
   mode: "development",
   devtool: "source-map",
@@ -44,15 +44,16 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "host",
+      name: "Host",
       remotes: {
-        remote: `remote@http://localhost:4000/remoteEntry.js`,
+        Remote: `Remote@http://localhost:4000/remoteEntry.js`,
       },
     }),
     new HtmlWebpackPlugin({
       template: "public/index.html",
       title: "Webpack App",
       filename: "index.html",
+      chunks: ["main"],
     }),
   ],
   resolve: {

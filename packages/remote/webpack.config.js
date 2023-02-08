@@ -6,7 +6,7 @@ const { dependencies } = require("./package.json");
 
 module.exports = {
   entry: {
-    remoteEntry: path.join(__dirname, "src/index"),
+    main: path.join(__dirname, "src/index"),
   },
   cache: false,
 
@@ -56,7 +56,8 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "remote",
+      name: "Remote",
+      filename: "remoteEntry.js",
       exposes: {
         "./Button": "./src/components/Button",
         // './Components':'./src/components',
@@ -77,6 +78,7 @@ module.exports = {
       template: "public/index.html",
       title: "Webpack App",
       filename: "index.html",
+      chunks: ["main"],
     }),
   ],
   resolve: {
