@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+// const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { FederatedTypesPlugin } = require("@module-federation/typescript");
 
 const { dependencies } = require("./package.json");
 
@@ -37,7 +38,7 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "public"),
+      directory: path.join(__dirname, "dist"),
     },
     port: 4000,
     hot: true,
@@ -45,25 +46,24 @@ module.exports = {
     historyApiFallback: true,
   },
   output: {
-    publicPath: "http://localhost:4000/",
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
-    clean: true,
-    assetModuleFilename: "[name][ext]",
+    publicPath: "auto",
+  },
+  infrastructureLogging: {
+    level: "log",
   },
   module: {
     rules: [
-      {
-        test: /\.m?js/,
-        type: "javascript/auto",
-        resolve: {
-          fullySpecified: false,
-        },
-      },
-      {
-        test: /\.(css|s[ac]ss)$/i,
-        use: ["style-loader", "css-loader", "postcss-loader"],
-      },
+      // {
+      //   test: /\.m?js/,
+      //   type: "javascript/auto",
+      //   resolve: {
+      //     fullySpecified: false,
+      //   },
+      // },
+      // {
+      //   test: /\.(css|s[ac]ss)$/i,
+      //   use: ["style-loader", "css-loader", "postcss-loader"],
+      // },
       {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
@@ -72,22 +72,20 @@ module.exports = {
           options: {
             presets: [
               "@babel/preset-typescript",
-              [
-                "@babel/preset-react",
-                {
-                  runtime: "automatic",
-                },
-              ],
+              "@babel/preset-react",
               "@babel/preset-env",
             ],
-            plugins: [["@babel/transform-runtime"]],
+            // plugins: [["@babel/transform-runtime"]],
           },
         },
       },
     ],
   },
   plugins: [
-    new ModuleFederationPlugin(federationConfig),
+    // new ModuleFederationPlugin(federationConfig),
+    new FederatedTypesPlugin({
+      federationConfig,
+    }),
 
     new HtmlWebpackPlugin({
       template: "public/index.html",

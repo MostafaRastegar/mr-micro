@@ -1,6 +1,9 @@
 import React from "react";
-import "./remote.d";
-const Button = React.lazy(() => import("Remote/Button"));
+import RemoteButtonProps from "@mfTypes/Button";
+const RemoteButton = React.lazy(
+  () => import("Remote/Button")
+) as unknown as typeof RemoteButtonProps;
+
 import ErrorBoundary from "./ErrorBoundary";
 
 const App = () => {
@@ -9,7 +12,7 @@ const App = () => {
       <h1>Host Website2</h1>
       <h2>this button import from remote:</h2>
       <ErrorBoundary>
-        <Button id={2121}>Remote button</Button>
+        <RemoteButton id="12">host button</RemoteButton>
       </ErrorBoundary>
     </div>
   );

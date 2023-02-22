@@ -1,12 +1,33 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+// const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const { FederatedTypesPlugin } = require("@module-federation/typescript");
+// const { FederatedTypesPlugin } = require("@module-federation/typescript");
+
 const dotenv = require("dotenv").config({
   path: path.join(__dirname, ".env"),
 });
 const { dependencies } = require("./package.json");
+const federationConfig = {
+  name: "Host",
+  filename: "remoteEntry.js",
 
+  remotes: {
+    Remote: `Remote@${process.env.REMOTE_URL}/remoteEntry.js`,
+  },
+  shared: {
+    ...dependencies,
+    react: {
+      singleton: true,
+      requiredVersion: dependencies["react"],
+    },
+    "react-dom": {
+      singleton: true,
+      requiredVersion: dependencies["react-dom"],
+    },
+  },
+};
 module.exports = {
   entry: {
     main: path.join(__dirname, "src/index"),
@@ -15,33 +36,21 @@ module.exports = {
   devtool: "source-map",
   devServer: {
     static: {
-      directory: path.join(__dirname, "public"),
+      directory: path.join(__dirname, "dist"),
     },
     port: 3000,
     hot: true,
     compress: true,
     historyApiFallback: true,
   },
+  infrastructureLogging: {
+    level: "log",
+  },
   output: {
-    publicPath: "http://localhost:3000/",
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
-    clean: true,
-    assetModuleFilename: "[name][ext]",
+    publicPath: "auto",
   },
   module: {
     rules: [
-      {
-        test: /\.m?js/,
-        type: "javascript/auto",
-        resolve: {
-          fullySpecified: false,
-        },
-      },
-      {
-        test: /\.(css|s[ac]ss)$/i,
-        use: ["style-loader", "css-loader", "postcss-loader"],
-      },
       {
         test: /\.(ts|tsx|js|jsx)$/,
         exclude: /node_modules/,
@@ -50,15 +59,10 @@ module.exports = {
           options: {
             presets: [
               "@babel/preset-typescript",
-              [
-                "@babel/preset-react",
-                {
-                  runtime: "automatic",
-                },
-              ],
+              "@babel/preset-react",
               "@babel/preset-env",
             ],
-            plugins: [["@babel/transform-runtime"]],
+            // plugins: [["@babel/transform-runtime"]],
           },
         },
       },
@@ -68,12 +72,13 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": dotenv.parsed,
     }),
-    new ModuleFederationPlugin({
-      name: "Host",
-      remotes: {
-        Remote: `Remote@${process.env.REMOTE_URL}/remoteEntry.js`,
-      },
-    }),
+    // new FederatedTypesPlugin({
+    //   federationConfig,
+    // }),
+    new FederatedTypesPlugin({ federationConfig }),
+
+    // new ModuleFederationPlugin(federationConfig),
+
     new HtmlWebpackPlugin({
       template: "public/index.html",
       title: "Webpack App",
