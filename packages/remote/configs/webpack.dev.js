@@ -1,21 +1,22 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
-const baseConfig = require("./webpack.base");
+const webpackBaseConfig = require("./webpack.base");
 
-module.exports = merge(baseConfig, {
-  cache: true,
+// @ts-ignore
+module.exports = merge(webpackBaseConfig, {
   mode: "development",
+  devtool: "eval",
+  cache: false,
+  optimization: {
+    minimize: false,
+  },
   devServer: {
     static: {
-      directory: path.join(process.cwd(), "dist"),
+      directory: path.join(__dirname, "../dist"),
     },
     port: 4000,
     hot: true,
     compress: false,
-    historyApiFallback: true,
-  },
-  watchOptions: {
-    poll: true,
-    ignored: /node_modules/,
+    historyApiFallback: false,
   },
 });

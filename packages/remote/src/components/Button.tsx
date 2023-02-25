@@ -7,7 +7,7 @@ export interface ButtonProps {
 }
 
 const Button: FC<ButtonProps> = ({ children, id }) => {
-  return <button name={id}>{children} 55</button>;
+  return <button name={id}>{children} 36</button>;
 };
 
 export default Button;

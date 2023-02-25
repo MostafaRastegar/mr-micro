@@ -1,23 +1,22 @@
 const path = require("path");
 const { merge } = require("webpack-merge");
-const baseConfig = require("./webpack.base");
-const { FederatedTypesPlugin } = require("@module-federation/typescript");
-const federationConfig = require("./federationConfig");
+const webpackBaseConfig = require("./webpack.base");
 
-module.exports = merge(baseConfig, {
-  cache: false,
+// @ts-ignore
+module.exports = merge(webpackBaseConfig, {
   mode: "production",
+  devtool: "cheap-source-map",
+
+  cache: true,
+  optimization: {
+    minimize: true,
+  },
   devServer: {
     static: {
-      directory: path.join(process.cwd(), "dist"),
+      directory: path.join(__dirname, "../dist"),
     },
     port: 4000,
     compress: true,
     historyApiFallback: true,
   },
-  plugins: [
-    new FederatedTypesPlugin({
-      federationConfig,
-    }),
-  ],
 });
