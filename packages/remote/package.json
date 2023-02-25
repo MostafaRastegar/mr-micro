@@ -6,29 +6,31 @@
   "author": "m.rastegar",
   "license": "MIT",
   "dependencies": {
+    "@module-federation/typescript": "^2.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "web-vitals": "^3.1.1",
-    "@module-federation/typescript": "^2.2.0"
+    "web-vitals": "^3.1.1"
   },
   "scripts": {
     "start": "webpack --watch",
-    "dev": "webpack",
-    "build": "webpack --mode production",
-    "serve": "serve -l 4000 -s dist"
+    "dev": "webpack serve",
+    "build": "webpack --mode production --progress",
+    "build:prod": "webpack --mode production --config configs/webpack.prod.js",
+    "start:dev": "webpack-dev-server --open",
+    "serve": "webpack serve",
+    "tscheck": "tsc"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
-    "@babel/plugin-transform-runtime": "^7.19.6",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
     "@babel/preset-typescript": "^7.18.6",
-    "@types/jest": "^29.4.0",
-    "@types/node": "^18.13.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "babel-loader": "^9.1.2",
+    "core-js": "^3.28.0",
     "html-webpack-plugin": "^5.5.0",
+    "regenerator-runtime": "^0.13.11",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.5",
     "webpack": "^5.75.0",

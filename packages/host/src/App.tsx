@@ -2,7 +2,7 @@ import React from "react";
 import RemoteButtonProps from "@mfTypes/Button";
 const RemoteButton = React.lazy(
   () => import("Remote/Button")
-) as unknown as typeof RemoteButtonProps;
+) as typeof RemoteButtonProps;
 
 import ErrorBoundary from "./ErrorBoundary";
 

@@ -28,6 +28,7 @@ const federationConfig = {
     },
   },
 };
+
 module.exports = {
   entry: {
     main: path.join(__dirname, "src/index"),
@@ -52,17 +53,22 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(js|ts)x?$/, // add |ts
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
             presets: [
               "@babel/preset-typescript",
+              [
+                "@babel/preset-env",
+                {
+                  useBuiltIns: "usage",
+                  corejs: 3,
+                },
+              ],
               "@babel/preset-react",
-              "@babel/preset-env",
             ],
-            // plugins: [["@babel/transform-runtime"]],
           },
         },
       },
@@ -72,12 +78,7 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": dotenv.parsed,
     }),
-    // new FederatedTypesPlugin({
-    //   federationConfig,
-    // }),
     new FederatedTypesPlugin({ federationConfig }),
-
-    // new ModuleFederationPlugin(federationConfig),
 
     new HtmlWebpackPlugin({
       template: "public/index.html",

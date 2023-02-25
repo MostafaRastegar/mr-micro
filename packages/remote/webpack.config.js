@@ -1,8 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-// const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const { FederatedTypesPlugin } = require("@module-federation/typescript");
-
 const { dependencies } = require("./package.json");
 
 const federationConfig = {
@@ -10,7 +8,6 @@ const federationConfig = {
   filename: "remoteEntry.js",
   exposes: {
     "./Button": "./src/components/Button",
-    // './Components':'./src/components',
   },
   shared: {
     ...dependencies,
@@ -24,25 +21,25 @@ const federationConfig = {
     },
   },
 };
-
 module.exports = {
   entry: {
     main: path.join(__dirname, "./src/index.js"),
   },
-  cache: false,
+  // cache: false,
 
   mode: "development",
-  devtool: "source-map",
-  optimization: {
-    minimize: false,
-  },
+  // devtool: "source-map",
+  // optimization: {
+  //   minimize: false,
+  // },
   devServer: {
     static: {
       directory: path.join(__dirname, "dist"),
     },
     port: 4000,
     hot: true,
-    compress: true,
+    // com
+    press: true,
     historyApiFallback: true,
   },
   output: {
@@ -53,36 +50,29 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.m?js/,
-      //   type: "javascript/auto",
-      //   resolve: {
-      //     fullySpecified: false,
-      //   },
-      // },
-      // {
-      //   test: /\.(css|s[ac]ss)$/i,
-      //   use: ["style-loader", "css-loader", "postcss-loader"],
-      // },
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        test: /\.(js|ts)x?$/, // add |ts
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
           options: {
             presets: [
               "@babel/preset-typescript",
+              [
+                "@babel/preset-env",
+                {
+                  useBuiltIns: "usage",
+                  corejs: 3,
+                },
+              ],
               "@babel/preset-react",
-              "@babel/preset-env",
             ],
-            // plugins: [["@babel/transform-runtime"]],
           },
         },
       },
     ],
   },
   plugins: [
-    // new ModuleFederationPlugin(federationConfig),
     new FederatedTypesPlugin({
       federationConfig,
     }),

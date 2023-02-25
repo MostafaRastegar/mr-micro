@@ -5,4 +5,3 @@ export interface ButtonProps {
 }
 declare const Button: FC<ButtonProps>;
 export default Button;
-//# sourceMappingURL=Button.d.ts.map
