@@ -3,12 +3,8 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { FederatedTypesPlugin } = require("@module-federation/typescript");
 const dotenv = require("dotenv").config({
-  path: path.join(__dirname, ".env"),
+  path: path.join(__dirname, "../.env"),
 });
-
-console.log("===== start process.env.REMOTE_URL =======>");
-console.log(process.env.REMOTE_URL);
-console.log("<==== end   =======");
 
 const federationConfig = require("./federationConfig");
 
