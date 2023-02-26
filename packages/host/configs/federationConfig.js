@@ -1,9 +1,6 @@
 const { dependencies } = require("../package.json");
 
 const federationConfig = (REMOTE_URL) => {
-  console.log("===== start REMOTE_URL =======>");
-  console.log(REMOTE_URL);
-  console.log("<==== end   =======");
   return {
     name: "Host",
     filename: "remoteEntry.js",

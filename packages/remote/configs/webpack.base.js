@@ -43,7 +43,7 @@ module.exports = {
 
     new HtmlWebpackPlugin({
       template: "public/index.html",
-      title: "Webpack App",
+      title: "Remote App",
       filename: "index.html",
       chunks: ["main"],
     }),
