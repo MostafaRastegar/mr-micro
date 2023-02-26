@@ -1,4 +1,4 @@
-# TypeScript-react-monorepo-yarn-workspace Example
+# TypeScript-react-monorepo Example
 
 This example demos a basic host/remote application with TypeScript and also streams types.
 
