@@ -3,11 +3,11 @@ import React from "react";
 
 export interface ButtonProps {
   children: ReactNode;
-  id: string;
+  name: string;
 }
 
-const Button: FC<ButtonProps> = ({ children, id }) => {
-  return <button name={id}>{children} 55</button>;
+const Button: FC<ButtonProps> = ({ children, name }) => {
+  return <button name={name}>{children}</button>;
 };
 
 export default Button;

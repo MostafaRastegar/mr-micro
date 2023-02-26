@@ -9,10 +9,10 @@ import ErrorBoundary from "./ErrorBoundary";
 const App = () => {
   return (
     <div>
-      <h1>Host Website2</h1>
-      <h2>this button import from remote:</h2>
+      <h1>Host Website</h1>
+      <h2>this button import from Remote project:</h2>
       <ErrorBoundary>
-        <RemoteButton id="12">host button</RemoteButton>
+        <RemoteButton name="host-button">Remote button</RemoteButton>
       </ErrorBoundary>
     </div>
   );

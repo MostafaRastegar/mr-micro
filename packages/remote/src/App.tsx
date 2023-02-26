@@ -3,9 +3,8 @@ import Button from "./components/Button";
 const App = () => {
   return (
     <div>
-      <h1>Host Website2</h1>
-      <h2>this button import from remote:</h2>
-      <Button id="ff">Remote button</Button>
+      <h1>Remote Website</h1>
+      <Button name="remote-button">button</Button>
     </div>
   );
 };

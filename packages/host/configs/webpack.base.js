@@ -1,6 +1,11 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { FederatedTypesPlugin } = require("@module-federation/typescript");
+const dotenv = require("dotenv").config({
+  path: path.join(__dirname, "../.env"),
+});
+
 const federationConfig = require("./federationConfig");
 
 module.exports = {
@@ -36,14 +41,18 @@ module.exports = {
       },
     ],
   },
+
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env": dotenv.parsed,
+    }),
     new FederatedTypesPlugin({
-      federationConfig,
+      federationConfig: federationConfig(process.env.REMOTE_URL),
     }),
 
     new HtmlWebpackPlugin({
       template: "public/index.html",
-      title: "Remote App",
+      title: "Host App",
       filename: "index.html",
       chunks: ["main"],
     }),
