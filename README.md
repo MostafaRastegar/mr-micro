@@ -1,4 +1,4 @@
-# TypeScript Example
+# TypeScript-react-monorepo Example
 
 This example demos a basic host/remote application with TypeScript and also streams types.
 
@@ -24,4 +24,4 @@ Run `yarn start` in root folder. This will build and serve both `host` and `remo
 # Tip
 
 - Monorepo is used for ease of use. But there is no requirement to use it.
-- This project demonstrates the functionality of xzxzxz. To read more, you can refer to the documentation of this package.
+- This project demonstrates the functionality of @module-federation/typescript. To read more, you can refer to the documentation of this package.
